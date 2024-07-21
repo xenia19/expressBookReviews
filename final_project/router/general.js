@@ -24,6 +24,24 @@ public_users.post("/register", (req,res) => {
   
 });
 
+public_users.get('/',function (req, res) {
+    let myPromise = new Promise((resolve,reject) => {
+        try{
+            let bookList = [];
+            Object.values(books).map((element)=>(
+                bookList.push(element["title"])
+            ))
+            resolve(bookList);
+        }catch(error){
+            reject("Error!")
+        } 
+    })
+    myPromise.then((bookList)=>{
+        return res.send(JSON.stringify(bookList));
+    })
+    
+});
+
 public_users.get('/', function (req, res) {
   const booklist = Object.values(books).map(book => book.title);
   return res.json(booklist);
